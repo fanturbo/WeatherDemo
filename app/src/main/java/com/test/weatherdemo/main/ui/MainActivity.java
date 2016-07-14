@@ -1,4 +1,4 @@
-package com.test.weatherdemo;
+package com.test.weatherdemo.main.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,7 +12,10 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.test.weatherdemo.R;
+
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
