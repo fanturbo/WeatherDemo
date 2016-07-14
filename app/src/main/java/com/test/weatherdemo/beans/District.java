@@ -1,6 +1,13 @@
 package com.test.weatherdemo.beans;
 
-public class District {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class District extends RealmObject {
+	@PrimaryKey
 	private String id;
 	private String name;
 

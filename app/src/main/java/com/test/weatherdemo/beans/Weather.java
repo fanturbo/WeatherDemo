@@ -1,12 +1,16 @@
 package com.test.weatherdemo.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * Created by turbo on 2016/7/14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Weather extends RealmObject {
 
     /**
@@ -26,7 +30,7 @@ public class Weather extends RealmObject {
      * weather_data : [{"date":"周四 07月14日 (实时：31℃)","dayPictureUrl":"http://api.map.baidu.com/images/weather/day/zhenyu.png","nightPictureUrl":"http://api.map.baidu.com/images/weather/night/zhenyu.png","weather":"阵雨","wind":"微风","temperature":"31 ~ 22℃"},{"date":"周五","dayPictureUrl":"http://api.map.baidu.com/images/weather/day/duoyun.png","nightPictureUrl":"http://api.map.baidu.com/images/weather/night/duoyun.png","weather":"多云","wind":"微风","temperature":"27 ~ 21℃"},{"date":"周六","dayPictureUrl":"http://api.map.baidu.com/images/weather/day/duoyun.png","nightPictureUrl":"http://api.map.baidu.com/images/weather/night/duoyun.png","weather":"多云","wind":"微风","temperature":"29 ~ 22℃"},{"date":"周日","dayPictureUrl":"http://api.map.baidu.com/images/weather/day/qing.png","nightPictureUrl":"http://api.map.baidu.com/images/weather/night/qing.png","weather":"晴","wind":"微风","temperature":"33 ~ 23℃"}]
      */
 
-    private List<ResultsEntity> results;
+    private RealmList<ResultsEntity> results;
 
     public int getError() {
         return error;
@@ -56,158 +60,7 @@ public class Weather extends RealmObject {
         return results;
     }
 
-    public void setResults(List<ResultsEntity> results) {
+    public void setResults(RealmList<ResultsEntity> results) {
         this.results = results;
-    }
-
-    public static class ResultsEntity {
-        private String currentCity;
-        private String pm25;
-        /**
-         * title : 穿衣
-         * zs : 热
-         * tipt : 穿衣指数
-         * des : 天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。
-         */
-
-        private List<IndexEntity> index;
-        /**
-         * date : 周四 07月14日 (实时：31℃)
-         * dayPictureUrl : http://api.map.baidu.com/images/weather/day/zhenyu.png
-         * nightPictureUrl : http://api.map.baidu.com/images/weather/night/zhenyu.png
-         * weather : 阵雨
-         * wind : 微风
-         * temperature : 31 ~ 22℃
-         */
-
-        private List<WeatherDataEntity> weather_data;
-
-        public String getCurrentCity() {
-            return currentCity;
-        }
-
-        public void setCurrentCity(String currentCity) {
-            this.currentCity = currentCity;
-        }
-
-        public String getPm25() {
-            return pm25;
-        }
-
-        public void setPm25(String pm25) {
-            this.pm25 = pm25;
-        }
-
-        public List<IndexEntity> getIndex() {
-            return index;
-        }
-
-        public void setIndex(List<IndexEntity> index) {
-            this.index = index;
-        }
-
-        public List<WeatherDataEntity> getWeather_data() {
-            return weather_data;
-        }
-
-        public void setWeather_data(List<WeatherDataEntity> weather_data) {
-            this.weather_data = weather_data;
-        }
-
-        public static class IndexEntity {
-            private String title;
-            private String zs;
-            private String tipt;
-            private String des;
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getZs() {
-                return zs;
-            }
-
-            public void setZs(String zs) {
-                this.zs = zs;
-            }
-
-            public String getTipt() {
-                return tipt;
-            }
-
-            public void setTipt(String tipt) {
-                this.tipt = tipt;
-            }
-
-            public String getDes() {
-                return des;
-            }
-
-            public void setDes(String des) {
-                this.des = des;
-            }
-        }
-
-        public static class WeatherDataEntity {
-            private String date;
-            private String dayPictureUrl;
-            private String nightPictureUrl;
-            private String weather;
-            private String wind;
-            private String temperature;
-
-            public String getDate() {
-                return date;
-            }
-
-            public void setDate(String date) {
-                this.date = date;
-            }
-
-            public String getDayPictureUrl() {
-                return dayPictureUrl;
-            }
-
-            public void setDayPictureUrl(String dayPictureUrl) {
-                this.dayPictureUrl = dayPictureUrl;
-            }
-
-            public String getNightPictureUrl() {
-                return nightPictureUrl;
-            }
-
-            public void setNightPictureUrl(String nightPictureUrl) {
-                this.nightPictureUrl = nightPictureUrl;
-            }
-
-            public String getWeather() {
-                return weather;
-            }
-
-            public void setWeather(String weather) {
-                this.weather = weather;
-            }
-
-            public String getWind() {
-                return wind;
-            }
-
-            public void setWind(String wind) {
-                this.wind = wind;
-            }
-
-            public String getTemperature() {
-                return temperature;
-            }
-
-            public void setTemperature(String temperature) {
-                this.temperature = temperature;
-            }
-        }
     }
 }

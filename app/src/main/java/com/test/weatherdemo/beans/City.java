@@ -1,16 +1,24 @@
 package com.test.weatherdemo.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
-public class City {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class City extends RealmObject {
+	@PrimaryKey
 	private String id;
 	private String name;
-	private List<District> disList;
+	private RealmList<District> disList;
 
 	public City() {
 	}
 
-	public City(String id, String name, List<District> disList) {
+	public City(String id, String name, RealmList<District> disList) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -37,7 +45,7 @@ public class City {
 		return disList;
 	}
 
-	public void setDisList(List<District> disList) {
+	public void setDisList(RealmList<District> disList) {
 		this.disList = disList;
 	}
 

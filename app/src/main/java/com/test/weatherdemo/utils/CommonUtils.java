@@ -12,10 +12,10 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 
 /**
  * Created by turbo on 2016/7/14.
@@ -31,11 +31,11 @@ public class CommonUtils {
      */
     public static List<Province> getProvinces(Context context)
             throws XmlPullParserException, IOException {
-        List<Province> provinces = null;
+        RealmList<Province> provinces = null;
         Province province = null;
-        List<City> citys = null;
+        RealmList<City> citys = null;
         City city = null;
-        List<District> districts = null;
+        RealmList<District> districts = null;
         District district = null;
 
         InputStream in = context.getResources().getAssets().open("citys.xml");
@@ -48,13 +48,13 @@ public class CommonUtils {
         while (event != XmlPullParser.END_DOCUMENT) {
             switch (event) {
                 case XmlPullParser.START_DOCUMENT:
-                    provinces = new ArrayList<Province>();
+                    provinces = new RealmList<Province>();
                     break;
                 case XmlPullParser.START_TAG:
                     String tagName = parser.getName();
                     if ("p".equals(tagName)) {
                         province = new Province();
-                        citys = new ArrayList<City>();
+                        citys = new RealmList<>();
                         int count = parser.getAttributeCount();
                         for (int i = 0; i < count; i++) {
                             String attrName = parser.getAttributeName(i);
@@ -68,7 +68,7 @@ public class CommonUtils {
                     }
                     if ("c".equals(tagName)) {
                         city = new City();
-                        districts = new ArrayList<District>();
+                        districts = new RealmList<>();
                         int count = parser.getAttributeCount();
                         for (int i = 0; i < count; i++) {
                             String attrName = parser.getAttributeName(i);
@@ -116,8 +116,8 @@ public class CommonUtils {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    for(Province province :provinceList){
-
+                    for (Province province : provinceList) {
+                        realm.copyToRealmOrUpdate(province);
                     }
                 }
             });

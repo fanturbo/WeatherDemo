@@ -1,39 +1,47 @@
 package com.test.weatherdemo.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
-public class Province {
-	private String id;
-	private String name;
-	private List<City> citys;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-	public String getId() {
-		return id;
-	}
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Province extends RealmObject {
+    @PrimaryKey
+    private String id;
+    private String name;
+    private RealmList<City> citys;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<City> getCitys() {
-		return citys;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCitys(List<City> citys) {
-		this.citys = citys;
-	}
+    public List<City> getCitys() {
+        return citys;
+    }
 
-	@Override
-	public String toString() {
-		return name;
-	}
+    public void setCitys(RealmList<City> citys) {
+        this.citys = citys;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 
 }

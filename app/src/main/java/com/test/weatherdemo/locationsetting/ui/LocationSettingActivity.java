@@ -8,6 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.test.weatherdemo.R;
+import com.test.weatherdemo.beans.Province;
+import com.test.weatherdemo.utils.CommonUtils;
+
+import io.realm.Realm;
 
 public class LocationSettingActivity extends AppCompatActivity {
 
@@ -18,14 +22,10 @@ public class LocationSettingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        CommonUtils.writeCity2Realm(this);
+        Realm realm = Realm.getDefaultInstance();
+        long count = realm.where(Province.class).count();
+
     }
 
 }
