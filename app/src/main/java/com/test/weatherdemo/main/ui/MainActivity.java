@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.test.weatherdemo.BaseActivity;
 import com.test.weatherdemo.R;
 import com.test.weatherdemo.locationsetting.ui.LocationSettingActivity;
 
@@ -20,7 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.refresh_view)
     SwipeRefreshLayout refreshView;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
