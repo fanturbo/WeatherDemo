@@ -26,6 +26,7 @@ import com.test.weatherdemo.main.WeatherAdapter;
 import com.test.weatherdemo.main.model.MainModel;
 import com.test.weatherdemo.main.model.MainModelImpl;
 import com.test.weatherdemo.main.view.MainView;
+import com.test.weatherdemo.utils.CommonUtils;
 import com.test.weatherdemo.utils.SharedPreferencesUtils;
 
 import rx.Subscriber;
@@ -66,11 +67,16 @@ public class MainPresenterImpl implements MainPresenter {
 
             @Override
             public void onNext(Weather weather) {
+                mainModel.saveData(weather);
                 mainView.showWeather(weather);
             }
         };
         String location = SharedPreferencesUtils.getString(context, "location", "");
-        mainModel.getWeather(location, subscriber);
+        if (CommonUtils.checkNetworkState(context)) {
+            mainModel.getWeather(location, subscriber);
+        } else {
+            mainModel.getWeatherFromRealm(location, subscriber);
+        }
     }
 
     @Override

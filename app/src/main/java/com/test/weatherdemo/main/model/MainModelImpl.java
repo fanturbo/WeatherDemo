@@ -1,21 +1,17 @@
 package com.test.weatherdemo.main.model;
 
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
-
+import com.test.weatherdemo.beans.ResultsEntity;
 import com.test.weatherdemo.beans.Weather;
-import com.test.weatherdemo.main.WeatherAdapter;
-import com.test.weatherdemo.utils.CommonUtils;
 import com.test.weatherdemo.utils.network.APIClient;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by turbo on 2016/7/14.
@@ -43,6 +39,35 @@ public class MainModelImpl implements MainModel {
                 .subscribe(subscriber);
     }
 
+    public void getWeatherFromRealm(String location, Subscriber subscriber) {
+        //想要查出Weather表里 currentCity=location的数据
+        //TODO java.lang.ClassCastException: io.realm.RealmResults cannot be cast to com.test.weatherdemo.beans.Weather
+        realm.where(Weather.class)
+                .findAllAsync().asObservable()
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void saveData(final Weather weather) {
+       /* realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyFromRealm(weather.getResults().get(0));
+            }
+        });*/
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyFromRealm(weather);
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+
+            }
+        });
+    }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
@@ -50,7 +75,8 @@ public class MainModelImpl implements MainModel {
             realm.close();
         }
     }
-    public void close(){
+
+    public void close() {
         if (subscription != null && subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }

@@ -4,11 +4,15 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by snail on 16/7/14.
  */
 public class ResultsEntity extends RealmObject {
+
+    @PrimaryKey
+    private int id;
     private String currentCity;
     private String pm25;
     /**
