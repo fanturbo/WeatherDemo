@@ -1,9 +1,9 @@
-package com.test.weatherdemo.main.presenter;
+package com.test.weatherdemo.locationsetting.presenter;
 
 /**
  * Created by turbo on 2016/7/15.
  */
-public interface MainPresenter {
+public interface SettingPresenter {
     void onPause();
 
     void onResume();

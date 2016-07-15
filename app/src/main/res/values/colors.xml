@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="swiperefresh_color1">#ff00ddff</color>
+    <color name="swiperefresh_color2">#ffffbb33</color>
+    <color name="swiperefresh_color3">#ffff4444</color>
+    <color name="swiperefresh_color4">#ffaa66cc</color>
 </resources>

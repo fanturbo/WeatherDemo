@@ -1,6 +1,8 @@
 package com.test.weatherdemo.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.test.weatherdemo.beans.City;
 import com.test.weatherdemo.beans.District;
@@ -109,6 +111,11 @@ public class CommonUtils {
         return provinces;
     }
 
+    /**
+     * 将城市列表数据写入数据库
+     *
+     * @param context
+     */
     public static void writeCity2Realm(Context context) {
         try {
             final List<Province> provinceList = getProvinces(context);
@@ -117,7 +124,11 @@ public class CommonUtils {
                 @Override
                 public void execute(Realm realm) {
                     for (Province province : provinceList) {
-                        realm.copyToRealmOrUpdate(province);
+                        for (City city : province.getCitys()) {
+                            for (District district : city.getDisList()) {
+                                realm.copyToRealmOrUpdate(district);
+                            }
+                        }
                     }
                 }
             });
@@ -126,5 +137,22 @@ public class CommonUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 检查网络是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean checkNetworkState(Context context) {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
+        // 1.判断是否有网络连接
+        if (networkInfo != null && networkInfo.isAvailable()
+                && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
     }
 }

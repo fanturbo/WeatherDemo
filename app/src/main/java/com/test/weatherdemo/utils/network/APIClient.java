@@ -14,7 +14,7 @@ public class APIClient {
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(JacksonConverterFactory.create())
-                .baseUrl("http://api.nytimes.com/")
+                .baseUrl("http://api.map.baidu.com/")
                 .build();
         apiService = retrofit.create(APIService.class);
         return apiService;
