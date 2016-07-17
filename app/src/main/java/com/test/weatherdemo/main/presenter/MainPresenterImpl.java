@@ -53,24 +53,26 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onResume() {
-        Subscriber subscriber = new Subscriber<Weather>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mainView.showError();
-            }
-
-            @Override
-            public void onNext(Weather weather) {
-                mainView.showWeather(weather);
-            }
-        };
         String location = SharedPreferencesUtils.getString(context, "location", "");
-        mainModel.getWeather(location, subscriber);
+        if (!"".equals(location)) {
+            Subscriber subscriber = new Subscriber<Weather>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    mainView.showError();
+                }
+
+                @Override
+                public void onNext(Weather weather) {
+                    mainView.showWeather(weather);
+                }
+            };
+            mainModel.getWeather(location, subscriber);
+        }
     }
 
     @Override
