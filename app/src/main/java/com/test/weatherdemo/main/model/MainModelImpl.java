@@ -1,11 +1,16 @@
 package com.test.weatherdemo.main.model;
 
+import android.util.Log;
+
 import com.test.weatherdemo.beans.ResultsEntity;
 import com.test.weatherdemo.beans.Weather;
 import com.test.weatherdemo.utils.network.APIClient;
 
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,23 +47,27 @@ public class MainModelImpl implements MainModel {
     public void getWeatherFromRealm(String location, Subscriber subscriber) {
         //想要查出Weather表里 currentCity=location的数据
         //TODO java.lang.ClassCastException: io.realm.RealmResults cannot be cast to com.test.weatherdemo.beans.Weather
-        realm.where(Weather.class)
-                .findAllAsync().asObservable()
-                .subscribe(subscriber);
+        RealmResults<Weather> weathers = realm.where(Weather.class)
+                .findAll();
+        for (Weather weather : weathers) {
+            List<ResultsEntity> results = weather.getResults();
+            for (ResultsEntity entity : results) {
+                if (location.equals(entity.getCurrentCity())) {
+                    weather.asObservable().subscribe(subscriber);
+                }
+            }
+        }
+
     }
 
     @Override
     public void saveData(final Weather weather) {
-       /* realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.copyFromRealm(weather.getResults().get(0));
-            }
-        });*/
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyFromRealm(weather);
+                long weatherCount = realm.where(Weather.class).count();
+                weather.setId((int) weatherCount + 1);
+                realm.copyToRealmOrUpdate(weather);
             }
         }, new Realm.Transaction.OnError() {
             @Override

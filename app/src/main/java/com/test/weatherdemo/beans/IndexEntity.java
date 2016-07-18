@@ -1,11 +1,13 @@
 package com.test.weatherdemo.beans;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by snail on 16/7/14.
  */
 public class IndexEntity extends RealmObject {
+
     private String title;
     private String zs;
     private String tipt;

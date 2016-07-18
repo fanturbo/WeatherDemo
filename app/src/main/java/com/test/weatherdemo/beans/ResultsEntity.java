@@ -12,7 +12,6 @@ import io.realm.annotations.PrimaryKey;
 public class ResultsEntity extends RealmObject {
 
     @PrimaryKey
-    private int id;
     private String currentCity;
     private String pm25;
     /**

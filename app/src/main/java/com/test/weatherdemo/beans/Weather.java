@@ -6,13 +6,15 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by turbo on 2016/7/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Weather extends RealmObject {
-
+    @PrimaryKey
+    private int id;
     /**
      * error : 0
      * status : success
@@ -31,6 +33,14 @@ public class Weather extends RealmObject {
      */
 
     private RealmList<ResultsEntity> results;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getError() {
         return error;

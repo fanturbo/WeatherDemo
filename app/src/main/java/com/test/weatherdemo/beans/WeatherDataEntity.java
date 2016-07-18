@@ -1,11 +1,13 @@
 package com.test.weatherdemo.beans;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by snail on 16/7/14.
  */
 public class WeatherDataEntity extends RealmObject {
+
     private String date;
     private String dayPictureUrl;
     private String nightPictureUrl;

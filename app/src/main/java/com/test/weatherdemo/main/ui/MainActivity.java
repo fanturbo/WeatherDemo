@@ -22,6 +22,7 @@ import com.test.weatherdemo.R;
 import com.test.weatherdemo.beans.Weather;
 import com.test.weatherdemo.locationsetting.ui.LocationSettingActivity;
 import com.test.weatherdemo.main.WeatherAdapter;
+import com.test.weatherdemo.main.presenter.MainPresenter;
 import com.test.weatherdemo.main.presenter.MainPresenterImpl;
 import com.test.weatherdemo.main.view.MainView;
 import com.test.weatherdemo.utils.SharedPreferencesUtils;
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     Toolbar toolbar;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    private MainPresenterImpl mainPresenter;
+    private MainPresenter mainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,10 +128,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        String location = SharedPreferencesUtils.getString(this, "location", "");
-        if (!"".equals(location)) {
-            mainPresenter.onResume();
-        }
+        mainPresenter.onResume();
     }
 
     @Override

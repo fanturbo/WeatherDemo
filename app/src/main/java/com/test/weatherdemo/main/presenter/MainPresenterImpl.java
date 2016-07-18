@@ -54,6 +54,10 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onResume() {
+        String location = SharedPreferencesUtils.getString(context, "location", "");
+        if ("".equals(location)) {
+            location = "北京";
+        }
         Subscriber subscriber = new Subscriber<Weather>() {
             @Override
             public void onCompleted() {
@@ -71,7 +75,6 @@ public class MainPresenterImpl implements MainPresenter {
                 mainView.showWeather(weather);
             }
         };
-        String location = SharedPreferencesUtils.getString(context, "location", "");
         if (CommonUtils.checkNetworkState(context)) {
             mainModel.getWeather(location, subscriber);
         } else {
